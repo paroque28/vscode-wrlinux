@@ -14,6 +14,14 @@ These instructions are for a 64-bit Intel image based on the intel-x86-64 board 
 * gdb
 * make
 
+## Prerequisities Installtion (Ubuntu)
+
+```bash
+apt install qemu qemu-tools
+```
+
+In Visual Studio Code install the C++ Plugin.
+
 ## Installing the Wind River Linux CD SDK
 
 Download the Intel NUC Software Development Kit (SDK) and Target System Image Full from https://labs.windriver.com/downloads/wrlinux.html .
@@ -25,17 +33,17 @@ tar -jxvf sdk-intel-x86-64.tar.bz2
 tar -jxvf target-full-intel-x86-64.tar.bz2
 ```
 
-Run the *wrlinux-graphics-10.20.33.0-glibc-x86_64-intel_x86_64-wrlinux-image-full-sdk.sh* shell script to install the SDK to */home/rcwoolley/wrlinuxcd/sdk/intel-x86-64*
+Run the *wrlinux-graphics-10.20.33.0-glibc-x86_64-intel_x86_64-wrlinux-image-full-sdk.sh* shell script to install the SDK to *$HOME/wrlinuxcd/sdk/intel-x86-64*
 
-NOTE: Substitute /home/rcwoolley for your home directory
+NOTE: Substitute $HOME for your home directory
 
 ```
 ./wrlinux-graphics-10.20.33.0-glibc-x86_64-intel_x86_64-wrlinux-image-full-sdk.sh
 
 Wind River Linux development SDK installer version 20.33
 ========================================================
-Enter target directory for SDK (default: /opt/windriver/wrlinux-graphics/20.33): /home/rcwoolley/wrlinuxcd/sdk/intel-x86-64
-You are about to install the SDK to "/home/rcwoolley/wrlinuxcd/sdk/intel-x86-64". Proceed [Y/n]? y
+Enter target directory for SDK (default: /opt/windriver/wrlinux-graphics/20.33): 
+You are about to install the SDK to "/opt/windriver/wrlinux-graphics/20.33". Proceed [Y/n]? y
 Extracting SDK..............
 ```
 
@@ -60,7 +68,7 @@ We now shall clone an example project and configure it to use the SDK.
 
    ![GitHub Repo](./resources/githubrepo.png)
 
-5. For the destination directory enter: /home/rcwoolley/wrlinuxcd/
+5. For the destination directory enter: $HOME/wrlinuxcd/
 
    A subdirectory vscode-wrlinux will be created under the destination directory you enter.
 
@@ -71,7 +79,7 @@ We now shall clone an example project and configure it to use the SDK.
 8. In the settings.json file, set the wrlinuxsdk.sdkroot variable to the installation path of the SDK.
 
    ```
-   "wrlinuxsdk.sdkroot": "/home/rcwoolley/wrlinuxcd/sdk/intel-x86-64",
+   "wrlinuxsdk.sdkroot": "/opt/windriver/wrlinux-graphics/20.33",
    ```
 
    We must also set the sdkroot in the c_cpp_properties.json to allow IntelliSense code completion to work.   This is a temporary workaround for vscode-cpptools issue #6307.
@@ -83,7 +91,7 @@ We now shall clone an example project and configure it to use the SDK.
 11. In the JSON, set the sdkroot variable to the installation path of the SDK
 
     ```
-    "sdkroot": "/home/rcwoolley/wrlinuxcd/sdk/intel-x86-64"
+    "sdkroot": "/opt/windriver/wrlinux-graphics/20.33"
     ```
 
 12. Save the file.
@@ -110,7 +118,7 @@ An executable file named *hello* should now appear in the project explorer.
 
 1. From the integrated Terminal go to the vscode-wrlinux project directory.
    ```
-   cd /home/rcwoolley/wrlinuxcd/vscode-wrlinux
+   cd $HOME/wrlinuxcd/vscode-wrlinux
    ```
 
 2. Execute the following command to create a raw hard disk image:
@@ -120,11 +128,11 @@ An executable file named *hello* should now appear in the project explorer.
    ```
 3. Write the compressed filesystem image from the Target System Image Full to your new hard disk image:
    ```
-   zcat /home/rcwoolley/Downloads/target-full-intel-x86-64/wrlinux-image-full-intel-x86-64.ustart.img.gz | dd of=boot-image-qemu.hddimg conv=notrunc
+   zcat $HOME/Downloads/target-full-intel-x86-64/wrlinux-image-full-intel-x86-64.ustart.img.gz | dd of=boot-image-qemu.hddimg conv=notrunc
    ```
 4. Copy the OVMF qcow2 image file from the Target System Image Full to your project directory 
    ```
-   cp /home/rcwoolley/Downloads/target-full-intel-x86-64/ovmf.qcow2 .
+   cp $HOME/Downloads/target-full-intel-x86-64/ovmf.qcow2 .
    ```
 
 5. To launch qemu, choose *Terminal > Run Task* from the menu.
